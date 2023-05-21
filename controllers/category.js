@@ -33,27 +33,16 @@ const createCategory = (req, res, next) => {
 
 const updateCategory = (req, res, next) => {
   try {
-    const { CategoryId, CategoryName } = req.body;
+    const { CategoryName } = req.body;
     const id = req.params.id;
-    if (CategoryId) {
-      const updateCategory = `UPDATE categories SET CategoryId = ${CategoryId} WHERE CategoryId = ${id}`;
-      db.query(updateCategory, (err, data) => {
-        if (err)
-          return res.status(400).json({ success: false, message: err.message });
-        return res
-          .status(200)
-          .json({ success: true, message: "Category Updated Successfully!!" });
-      });
-    } else {
-      const updateCategory = `UPDATE categories SET CategoryName = "${CategoryName}" WHERE CategoryId = ${id}`;
-      db.query(updateCategory, (err, data) => {
-        if (err)
-          return res.status(400).json({ success: false, message: err.message });
-        return res
-          .status(200)
-          .json({ success: true, message: "Category Updated Successfully!!" });
-      });
-    }
+    const updateCategory = `UPDATE categories SET CategoryName = "${CategoryName}" WHERE CategoryId = ${id}`;
+    db.query(updateCategory, (err, data) => {
+      if (err)
+        return res.status(400).json({ success: false, message: err.message });
+      return res
+        .status(200)
+        .json({ success: true, message: "Category Updated Successfully!!" });
+    });
   } catch (error) {
     return next(error);
   }
