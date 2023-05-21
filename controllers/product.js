@@ -14,9 +14,9 @@ const getProduct = (req, res, next) => {
 
 const createProduct = (req, res, next) => {
   try {
-    const { ProductId, ProductName, CategoryName, CategoryId } = req.body;
-    const queryForCreateProduct = `INSERT INTO products (ProductId,ProductName,CategoryName,CategoryId) VALUES (${ProductId},"${ProductName}","${CategoryName}",${CategoryId})`;
-
+    const { ProductName, CategoryName, CategoryId } = req.body;
+    const queryForCreateProduct = `INSERT INTO products (ProductName,CategoryName,CategoryId) VALUES ("${ProductName}","${CategoryName}",${CategoryId})`;
+    console.log(queryForCreateProduct);
     db.query(queryForCreateProduct, (err, data) => {
       if (err)
         return res.status(400).json({ success: false, message: err.message });
