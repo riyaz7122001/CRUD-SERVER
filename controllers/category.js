@@ -4,7 +4,7 @@ const getCategory = (req, res, next) => {
   try {
     const query = "SELECT * FROM categories;";
     db.query(query, (err, data) => {
-      if (err) return res.json({ success: false, message: `${err}` });
+      if (err) return res.json({ success: false, message: err.message });
       return res.status(200).json({ success: true, data: data });
     });
   } catch (error) {
@@ -15,9 +15,11 @@ const getCategory = (req, res, next) => {
 const createCategory = (req, res, next) => {
   try {
     const { CategoryId, CategoryName } = req.body;
-    const insertCategory = `INSERT INTO categories (CategoryId,CategoryName) VALUES(${CategoryId},"${CategoryName}")`;
+    const insertCategory = `INSERT INTO categories (CategoryId,CategoryName) VALUES (${CategoryId},"${CategoryName}")`;
+    console.log(insertCategory);
     db.query(insertCategory, (err, data) => {
-      if (err) return res.json(err);
+      if (err)
+        return res.status(400).json({ success: false, message: err.message });
       return res.status(200).json({
         success: true,
         message: "Category Created Successfully!!",
